@@ -13,7 +13,7 @@ namespace core {
 
     inline void div();
 
-    float eval();
+    void eval();
 }
 
 #endif // CORE_H

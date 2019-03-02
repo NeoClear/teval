@@ -16,6 +16,8 @@ enum node_type
     Minus,
     Multi,
     Div,
+    Assign,
+    SemiColon,
     Default,
     Symbol,
 };
@@ -32,6 +34,15 @@ extern std::vector<std::string> block;
 
 extern node parse[inf];
 extern long top;
+
+extern std::map<std::string, float> table;
+
+extern float regis;
+extern bool update_regis;
+
+namespace data {
+    std::string node_type_s(node_type n);
+}
 
 namespace init {
     void set_src(char *s);

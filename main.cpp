@@ -30,10 +30,15 @@ inline void repl()
         gets(cache);
         if (strcmp(cache, ":quit") == 0 || strcmp(cache, ":q") == 0)
             return;
+        else if (strcmp(cache, ":p") == 0 || strcmp(cache, ":print") == 0)
+            debug::print_table();
 
         init::set_src(cache);
         pre_build::gen();
-        cout<< "("<< flag<< "): "<< core::eval()<< endl;
+        core::eval();
+//        debug::print_static_parse();
+        if (update_regis)
+            cout<< regis<< endl;
     }
 }
 
@@ -44,7 +49,7 @@ int main(int argc, char *argv[])
             init::reset();
             init::set_src(read(argv[i]));
             pre_build::gen();
-            cout<< core::eval()<< endl;
+            core::eval();
         }
         return 0;
     }

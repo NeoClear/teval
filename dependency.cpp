@@ -14,7 +14,12 @@ namespace dependency {
             return true;
         return false;
     }
-
+    bool isFormula(node_type n)
+    {
+        if (n != Assign && n != Symbol && n != SemiColon)
+            return true;
+        return false;
+    }
     node_type types(char c)
     {
         if (c == '(')
@@ -31,6 +36,12 @@ namespace dependency {
             return Multi;
         else if (c == '/')
             return Div;
+        else if (c == '=')
+            return Assign;
+        else if (c == ';')
+            return SemiColon;
+        else if (isalpha(c))
+            return Symbol;
         else
             return Default;
     }

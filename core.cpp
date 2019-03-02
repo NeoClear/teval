@@ -35,10 +35,40 @@ namespace core {
         top -= 2;
     }
 
-    float eval()
+    void eval()
     {
+        bool assign = false;
+        std::string name;
         for (size_t i = 0; i < block.size(); i++) {
-            parse[top].tp = dependency::types_s( block[i]);
+            if (block[i] == "let") {
+                assign = true;
+                i++;
+                name = block[i];
+                i++;
+                if (block[i] != "=") {
+                    printf("Didn't find a assigning operator\n");
+                    return;
+                }
+                continue;
+            } else if (block[i] == ";") {
+                if (top != 1) {
+                    printf("Didn't parse correctly.\n");
+                    return;
+                }
+                if (assign) {
+                    table[name] = parse[0].val;
+                    std::cout<< name<< " -> "<< table[name]<< std::endl;
+                    update_regis = false;
+                } else {
+                    regis = parse[0].val;
+                    update_regis = true;
+                }
+                name.clear();
+                assign = false;
+                top = 0;
+            }
+            node_type kind = dependency::types_s(block[i]);
+            parse[top].tp = kind;
             if (parse[top].tp == Number)
                 parse[top].val = stof(block[i]);
             top++;
@@ -48,11 +78,6 @@ namespace core {
                 multi();
             if (parse[top - 2].tp == Div && parse[top - 1].tp == Number)
                 div();
-//            debug::print_parse();
         }
-
-        if (top == 1)
-            return parse[0].val;
-        return 0.0;
     }
 }
