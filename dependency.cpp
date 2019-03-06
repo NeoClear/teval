@@ -1,4 +1,4 @@
-#include "dependency.h"
+﻿#include "dependency.h"
 
 namespace dependency {
     bool isOperator(node_type n)
@@ -52,5 +52,64 @@ namespace dependency {
         if (s[0] == '-' && types(s[1]) == Number)
             return Number;
         return types(s[0]);
+    }
+    complex read_complex(const char *s)
+    {
+        size_t i = 0;
+        double f = 1.0;
+        bool flag = false;
+        double div = 1.0;
+        double real = 0.0;
+        double img = 0.0;
+        char ch;
+        while (i < strlen(s)) {
+            ch = s[i];
+            i++;
+            if (ch == '-') {
+                f = -1.0;
+                continue;
+            }
+            if (ch == '.') {
+                flag = true;
+                continue;
+            }
+            if (ch == 'd') {
+                break;
+            }
+            if (flag)
+                div *= 10;
+            real = real * 10 + ch - '0';
+        }
+        real *= f / div;
+        f = 1.0;
+        flag = false;
+        div = 1.0;
+        while (i < strlen(s)) {
+            ch = s[i];
+            i++;
+            if (ch == '-') {
+                f = -1.0;
+                continue;
+            }
+            if (ch == '.') {
+                flag = true;
+                continue;
+            }
+            if (flag)
+                div *= 10;
+            img = img * 10 + ch - '0';
+        }
+        img *= f / div;
+        complex res;
+        res.real = real;
+        res.img = img;
+        return res;
+    }
+    void print_complex(complex x)
+    {
+        if (abs(x.img) < 0.000001)
+            std::cout<< x.real<< std::endl;
+        else
+            std::cout<< x.real<< "d"<< x.img<< std::endl;
     }
 }

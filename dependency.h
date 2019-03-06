@@ -1,4 +1,4 @@
-#ifndef DEPENDENCY_H
+﻿#ifndef DEPENDENCY_H
 #define DEPENDENCY_H
 
 #include "data.h"
@@ -12,6 +12,9 @@ namespace dependency {
     node_type types(char c);
 
     node_type types_s(std::string s);
+
+    complex read_complex(const char *s);
+    void print_complex(complex x);
 }
 
 #endif // DEPENDENCY_H

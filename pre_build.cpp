@@ -1,4 +1,4 @@
-#include "pre_build.h"
+﻿#include "pre_build.h"
 
 namespace pre_build {
     void reduce()
@@ -27,6 +27,12 @@ namespace pre_build {
         for (size_t i = 0; i < src.size(); i++) {
             node_type cur_t = dependency::types(src[i]);
             if (cur_t != dependency::types(src[i + 1])) {
+                if (cur_t == Number && dependency::types(src[i + 1]) == Symbol)
+                    continue;
+                if (cur_t == Symbol && dependency::types(src[i + 1]) == Number)
+                    continue;
+                if (cur_t == Symbol && dependency::types(src[i + 1]) == Minus)
+                    continue;
                 if (cur_t == Minus) {
                     if (i == 0 || dependency::types(src[i - 1]) != Number)
                         continue;

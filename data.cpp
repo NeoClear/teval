@@ -1,4 +1,4 @@
-#include "data.h"
+﻿#include "data.h"
 
 std::string src;
 std::vector<std::string> block;
@@ -6,9 +6,9 @@ std::vector<std::string> block;
 node parse[inf];
 long top = 0;
 
-std::map<std::string, float> table;
+std::map<std::string, complex> table;
 
-float regis;
+complex regis;
 bool update_regis;
 
 namespace data {
@@ -49,7 +49,10 @@ namespace init {
 
     void reset()
     {
-        regis = 0;
+        complex a;
+        a.real = 0;
+        a.img = 0;
+        regis = a;
         update_regis = false;
         block.reserve(inf);
         src.clear();

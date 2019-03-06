@@ -1,4 +1,4 @@
-#include "core.h"
+﻿#include "core.h"
 
 namespace core {
     inline void calc()
@@ -11,12 +11,16 @@ namespace core {
             top -= 2;
             return;
         }
-        float ans = parse[j].val;
+        complex ans = parse[j].val;
         for (int p = j + 2; p <= top - 1; p += 2) {
-            if (parse[p - 1].tp == Plus)
-                ans += parse[p].val;
-            if (parse[p - 1].tp == Minus)
-                ans -= parse[p].val;
+            if (parse[p - 1].tp == Plus) {
+                ans.real += parse[p].val.real;
+                ans.img += parse[p].val.img;
+            }
+            if (parse[p - 1].tp == Minus) {
+                ans.real -= parse[p].val.real;
+                ans.img -= parse[p].val.img;
+            }
         }
         parse[i].tp = 2;
         parse[i].val = ans;
@@ -25,13 +29,27 @@ namespace core {
 
     inline void multi()
     {
-        parse[top - 3].val *= parse[top - 1].val;
+        complex ans;
+        ans.real = parse[top - 3].val.real * parse[top - 1].val.real;
+        ans.real -= parse[top - 3].val.img * parse[top - 1].val.img;
+        ans.img = parse[top - 3].val.real * parse[top - 1].val.img;
+        ans.img += parse[top - 3].val.img * parse[top - 1].val.real;
+        parse[top - 3].val = ans;
         top -= 2;
     }
 
     inline void div()
     {
-        parse[top - 3].val /= parse[top - 1].val;
+        complex ans;
+        double div = (parse[top - 1].val.real) * (parse[top - 1].val.real);
+        div += (parse[top - 1].val.img) * (parse[top - 1].val.img);
+        ans.real = parse[top - 3].val.real * parse[top - 1].val.real;
+        ans.real += parse[top - 3].val.img * parse[top - 1].val.img;
+        ans.img = parse[top - 3].val.real * parse[top - 1].val.img * -1;
+        ans.img += parse[top - 3].val.img * parse[top - 1].val.real;
+        ans.real /= div;
+        ans.img /= div;
+        parse[top - 3].val = ans;
         top -= 2;
     }
 
@@ -57,7 +75,8 @@ namespace core {
                 }
                 if (assign) {
                     table[name] = parse[0].val;
-                    std::cout<< name<< " -> "<< table[name]<< std::endl;
+                    std::cout<< name<< " -> ";
+                    dependency::print_complex(table[name]);
                     update_regis = false;
                 } else {
                     regis = parse[0].val;
@@ -70,7 +89,7 @@ namespace core {
             node_type kind = dependency::types_s(block[i]);
             parse[top].tp = kind;
             if (parse[top].tp == Number)
-                parse[top].val = stof(block[i]);
+                parse[top].val = dependency::read_complex(block[i].c_str());
             top++;
             if (parse[top - 1].tp == RParenthesis)
                 calc();

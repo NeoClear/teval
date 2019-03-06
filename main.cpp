@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+﻿#include <bits/stdc++.h>
 #include <algorithm>
 #include "data.h"
 #include "pre_build.h"
@@ -35,10 +35,11 @@ inline void repl()
 
         init::set_src(cache);
         pre_build::gen();
+//        debug::print_block();
         core::eval();
 //        debug::print_static_parse();
         if (update_regis)
-            cout<< regis<< endl;
+            dependency::print_complex(regis);
     }
 }
 

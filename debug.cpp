@@ -1,10 +1,10 @@
-#include "debug.h"
+﻿#include "debug.h"
 
 namespace debug {
     void print_parse()
     {
         for (int i = 0; i < top; i++)
-            std::cout<< "Parse: "<< parse[i].tp<< ", "<< parse[i].val<< std::endl;
+            std::cout<< "Parse: "<< parse[i].tp<< ", "<< parse[i].val.real<< "d"<< parse[i].val.img<< std::endl;
         std::cout<< std::endl;
     }
     void print_block()
@@ -21,8 +21,8 @@ namespace debug {
     }
     void print_table()
     {
-        std::map<std::string, float>::iterator iter;
+        std::map<std::string, complex>::iterator iter;
         for (iter = table.begin(); iter != table.end(); iter++)
-            std::cout<< iter->first<< " -> "<< iter->second<< std::endl;
+            std::cout<< iter->first<< " -> "<< iter->second.real<< "d"<< iter->second.img<< std::endl;
     }
 }
