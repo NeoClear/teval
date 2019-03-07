@@ -14,42 +14,26 @@ namespace core {
         complex ans = parse[j].val;
         for (int p = j + 2; p <= top - 1; p += 2) {
             if (parse[p - 1].tp == Plus) {
-                ans.real += parse[p].val.real;
-                ans.img += parse[p].val.img;
+                ans += parse[p].val;
             }
             if (parse[p - 1].tp == Minus) {
-                ans.real -= parse[p].val.real;
-                ans.img -= parse[p].val.img;
+                ans -= parse[p].val;
             }
         }
-        parse[i].tp = 2;
+        parse[i].tp = Number;
         parse[i].val = ans;
         top = i + 1;
     }
 
     inline void multi()
     {
-        complex ans;
-        ans.real = parse[top - 3].val.real * parse[top - 1].val.real;
-        ans.real -= parse[top - 3].val.img * parse[top - 1].val.img;
-        ans.img = parse[top - 3].val.real * parse[top - 1].val.img;
-        ans.img += parse[top - 3].val.img * parse[top - 1].val.real;
-        parse[top - 3].val = ans;
+        parse[top - 3].val *= parse[top - 1].val;
         top -= 2;
     }
 
     inline void div()
     {
-        complex ans;
-        double div = (parse[top - 1].val.real) * (parse[top - 1].val.real);
-        div += (parse[top - 1].val.img) * (parse[top - 1].val.img);
-        ans.real = parse[top - 3].val.real * parse[top - 1].val.real;
-        ans.real += parse[top - 3].val.img * parse[top - 1].val.img;
-        ans.img = parse[top - 3].val.real * parse[top - 1].val.img * -1;
-        ans.img += parse[top - 3].val.img * parse[top - 1].val.real;
-        ans.real /= div;
-        ans.img /= div;
-        parse[top - 3].val = ans;
+        parse[top - 3].val /= parse[top - 1].val;
         top -= 2;
     }
 

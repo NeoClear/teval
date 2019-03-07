@@ -50,7 +50,6 @@ namespace pre_build {
             block.push_back(src.substr(split[i], split[i + 1] - split[i]));
         }
         reduce();
-//        debug::print_block();
     }
 
 }

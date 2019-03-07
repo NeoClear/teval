@@ -27,6 +27,67 @@ struct complex
     double real;
     double img;
     complex(): real(0.0), img(0.0) {}
+    const complex operator +(const complex n)
+    {
+        complex res;
+        res.real = real + n.real;
+        res.img = img + n.img;
+        return res;
+    }
+    const complex operator -(const complex n)
+    {
+        complex res;
+        res.real = real - n.real;
+        res.img = img - n.img;
+        return res;
+    }
+    const complex operator *(const complex n)
+    {
+        complex res;
+        res.real = real * n.real - img * n.img;
+        res.img = real * n.img + img * n.real;
+        return res;
+    }
+    const complex operator /(const complex n)
+    {
+        complex res;
+        double div = n.real * n.real + n.img * n.img;
+        res.real = (real * n.real + img * n.img) / div;
+        res.img = (img * n.real - real * n.img) / div;
+        return res;
+    }
+    bool operator ==(const complex n)
+    {
+        if ((abs(real - n.real) < 0.00001) && (abs(img - n.img) < 0.00001))
+            return true;
+        return false;
+    }
+    void operator +=(const complex n)
+    {
+        real += n.real;
+        img += n.img;
+    }
+    void operator -=(const complex n)
+    {
+        real -= n.real;
+        img -= n.img;
+    }
+    void operator *=(const complex n)
+    {
+        complex res;
+        res.real = real;
+        res.img = img;
+        real = (res * n).real;
+        img = (res * n).img;
+    }
+    void operator /=(const complex n)
+    {
+        complex res;
+        res.real = real;
+        res.img = img;
+        real = (res / n).real;
+        img = (res / n).img;
+    }
 };
 
 struct node

@@ -25,4 +25,13 @@ namespace debug {
         for (iter = table.begin(); iter != table.end(); iter++)
             std::cout<< iter->first<< " -> "<< iter->second.real<< "d"<< iter->second.img<< std::endl;
     }
+    void test_complex()
+    {
+        complex a, b;
+        a.real = 2;
+        a.img = -2;
+        b.real = 1;
+        b.img = -1;
+        dependency::print_complex(a / b);
+    }
 }

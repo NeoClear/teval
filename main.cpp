@@ -35,7 +35,7 @@ inline void repl()
 
         init::set_src(cache);
         pre_build::gen();
-//        debug::print_block();
+        debug::print_block();
         core::eval();
 //        debug::print_static_parse();
         if (update_regis)
